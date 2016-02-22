@@ -4,7 +4,9 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "start": "webpack-dev-server --inline --content-base"
+    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start:dev": "webpack-dev-server --inline --content-base public --history-api-fallback",
+    "start:prod": "webpack && node server.js"
   },
   "repository": {
     "type": "git",
@@ -35,6 +37,10 @@
   },
   "dependencies": {
     "classnames": "^2.2.3",
+    "compression": "^1.6.1",
+    "express": "^4.13.4",
+    "if-env": "^1.0.0",
+    "path": "^0.12.7",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-router": "^2.0.0"
