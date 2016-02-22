@@ -1,11 +1,7 @@
 var webpack = require('webpack');
 
 module.exports = {
-    entry: [
-        'webpack-dev-server/client?http://localhost:8080',
-        'webpack/hot/only-dev-server',
-        './src/index.js'
-    ],
+    entry: './src/index.js',
     module: {
         loaders: [
             {
@@ -32,16 +28,13 @@ module.exports = {
     },
 
     output: {
-        path: __dirname + '/dist',
-        publicPath: '/',
-        filename: 'bundle.js'
+      path: 'public',
+      filename: 'bundle.js',
+      publicPath: ''
     },
-    devtool: 'source-map',
-    devServer: {
-        contentBase: './dist',
-        hot: true
-    },
-    plugins: [
-        new webpack.HotModuleReplacementPlugin()
-    ]
+    plugins: process.env.NODE_ENV === 'production' ? [
+      new webpack.optimize.DedupePlugin(),
+      new webpack.optimize.OccurrenceOrderPlugin(),
+      new webpack.optimize.UglifyJsPlugin()
+    ] : []
 };
